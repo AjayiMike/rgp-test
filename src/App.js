@@ -212,7 +212,7 @@ function App() {
           profileId: Number(userId)
         }
 
-        setProfiles([newProfile, ...profiles])
+        setProfiles(prev => [newProfile, ...prev])
       })
 
     } else { //ethereum enabled browser but user is on a different network
@@ -241,7 +241,7 @@ function App() {
           profileId: Number(userId)
         }
 
-        setProfiles([newProfile, ...profiles])
+        setProfiles(prev => [newProfile, ...prev])
       })
     }
     
@@ -274,12 +274,14 @@ function App() {
         profileId: Number(userId)
       }
 
-      setProfiles([newProfile, ...profiles])
+      setProfiles(prev => [newProfile, ...prev])
     })
   }
 
   setProfiles(profilesArray);
- }
+
+
+}
 
   useEffect(() => {
 
