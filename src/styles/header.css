@@ -1,0 +1,81 @@
+header {
+  background: #132c44;
+  padding: 1.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #275a8c;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+header .logo .hamburger {
+  margin-right: 2rem;
+  font-size: 1.2rem;
+}
+header .logo .logo-text {
+  display: inline;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #6391c0;
+}
+
+header .navigation {
+  display: none;
+}
+
+header .navigation .nav-links-wrapper .nav-link-items a {
+  color: #fff;
+  text-decoration: none;
+}
+header .navigation .nav-links-wrapper .nav-link-items .active-page-link {
+  color: #6391c0;
+  border-bottom: 1px solid #6391c0;
+}
+
+header .account {
+  font-size: 0.8rem;
+  background: #275a8c;
+  padding: 0.5rem 0.1rem;
+  border: 2px solid #fff;
+  border-radius: 1rem;
+  cursor: default;
+}
+
+header .account .balance {
+  margin-right: 0.5rem;
+  background: #132c44;
+  padding: 0.5rem;
+  border-radius: 0.8rem;
+}
+
+header .connect-btn {
+  padding: 0.6rem 1rem;
+  color: #fff;
+  background: rgba(39, 90, 140, 1);
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: 0;
+  border-radius: 0.4rem;
+}
+
+@media only screen and (min-width: 768px) {
+  header .logo .hamburger {
+    display: none;
+  }
+  header .navigation {
+    display: block;
+  }
+
+  header .navigation .nav-links-wrapper {
+    display: flex;
+    list-style: none;
+  }
+
+  header .navigation .nav-links-wrapper .nav-link-items {
+    margin: 0 2rem;
+    color: #6391c0;
+  }
+}

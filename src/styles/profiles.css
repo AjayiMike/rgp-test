@@ -1,0 +1,28 @@
+.profiles-page-content {
+  padding: 1rem;
+}
+
+.profiles-page-content .page-heading {
+  color: #6391c0;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  font-weight: 900;
+}
+
+.profile-container {
+  width: 100%;
+}
+
+@media only screen and (max-width: 768px), (min-width: 400px) {
+  .profiles-page-content {
+    padding: 2rem 10%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .profile-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}

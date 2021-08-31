@@ -1,0 +1,91 @@
+.side-drawer-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  backdrop-filter: blur(5px);
+  display: none;
+}
+.show-side-drawer {
+  display: block;
+}
+.side-drawer {
+  position: absolute;
+  width: 15rem;
+  left: -15rem;
+  height: 100%;
+  background-color: #1c3955;
+  border-right: 1px solid #275a8c;
+  padding: 1rem;
+  animation: slideDrawerIn linear 0.3s;
+  animation-fill-mode: forwards;
+}
+
+.slide-out-side-drawer {
+  animation: slideDrawerOut linear 0.3s;
+  animation-fill-mode: forwards;
+}
+
+.side-drawer .back-arrow {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+}
+
+.side-drawer .logo-text {
+  margin-top: 3.5rem;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #6391c0;
+}
+.side-drawer .navigation .nav-links-wrapper {
+  list-style: none;
+}
+
+.side-drawer .navigation .nav-links-wrapper .nav-link-items {
+  list-style: none;
+  margin-bottom: 1rem;
+  margin-left: 0.5rem;
+}
+
+.side-drawer .navigation .nav-links-wrapper .nav-link-items a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.side-drawer .navigation .nav-links-wrapper .nav-link-items .active-page-link {
+  color: #6391c0;
+}
+
+.side-drawer
+  .navigation
+  .nav-links-wrapper
+  .nav-link-items
+  .active-page-link::before {
+  content: "";
+  padding: 0 0.1rem;
+  position: relative;
+  left: -0.5rem;
+  background-color: #6391c0;
+  border-radius: 1rem;
+}
+
+@keyframes slideDrawerIn {
+  0% {
+    left: -15rem;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes slideDrawerOut {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -15rem;
+  }
+}

@@ -1,0 +1,119 @@
+.create-profile {
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.create-profile .page-heading {
+  color: #6391c0;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.create-profile .connect-wallet-notice {
+  background-color: rgba(255, 255, 0, 0.5);
+  color: rgb(170, 8, 8);
+  padding: 0.2rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  text-align: center;
+  font-weight: 700;
+  display: block;
+  margin: 0 auto;
+}
+
+.create-profile .create-profile-form {
+  margin-top: 2rem;
+  border: 1px solid #275a8c;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  position: relative;
+}
+
+.create-profile .create-profile-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.create-profile .create-profile-form .form-group label,
+.create-profile .create-profile-form .form-group input {
+  display: block;
+}
+
+.create-profile .create-profile-form .form-group label {
+  margin-bottom: 0.8rem;
+  color: #6391c0;
+  font-weight: 700;
+}
+
+.create-profile .create-profile-form .form-group input {
+  width: 100%;
+  padding: 0.8rem;
+  background: transparent;
+  border: 1px solid #6391c0;
+  color: #6391c0;
+  border-radius: 0.5rem;
+}
+
+.create-profile .create-profile-form .create-profile-btn {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3rem;
+  background-color: #132c44;
+  border: 1px solid #6391c0;
+  color: #6391c0;
+  padding: 0.8rem 1.2rem;
+  border-radius: 2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all ease-in-out 0.3s;
+}
+
+.spinner-icon {
+  position: absolute;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color: #fff;
+  font-weight: 900;
+  animation: spin linear 0.8s;
+  animation-iteration-count: infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.create-profile .create-profile-form .create-profile-btn:hover {
+  background: #6391c0;
+  color: #132c44;
+}
+
+@media only screen and (min-width: 400px) {
+  .create-profile {
+    padding: 2rem 10%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .create-profile {
+    padding: 2rem 25%;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .create-profile {
+    padding: 2rem 30%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .create-profile {
+    padding: 2rem 35%;
+  }
+}

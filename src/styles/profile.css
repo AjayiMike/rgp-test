@@ -1,0 +1,33 @@
+.profile {
+  border: 1px solid #275a8c;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  color: #b8cfe6;
+  margin-bottom: 1.5rem;
+}
+
+.profile .address-id {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid#4c78a5;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: #6391c0;
+}
+
+.profile .profile-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile .profile-info .value {
+  font-weight: 800;
+}
+
+@media only screen and (min-width: 768px) {
+  .profile {
+    width: 48%;
+  }
+}
