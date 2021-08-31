@@ -7,10 +7,21 @@ import SideDrawer from "./components/SideDrawer"
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import { ethers } from 'ethers'
 import Abi from "./ABI/abi.json";
+import { useSnackbar } from 'react-simple-snackbar'
+import {useHistory} from "react-router-dom"
 
 
 function App() {
 
+const history = useHistory()
+  const options = {
+    position: 'bottom-center',
+    closeStyle: {
+      color: 'lightcoral',
+      fontSize: '16px',
+    },
+  }
+  const [openSnackbar] = useSnackbar(options)
   const contractAddress = "0x006F599c0920A5b369dE668E0810e53a9F8b216D";
 
 
@@ -88,7 +99,7 @@ function App() {
 
   const createProfile = async () => {
 
-    if(!newProfileData.firstName || !newProfileData.lastName) return alert(" please fill out all fields appropriately")
+    if(!newProfileData.firstName || !newProfileData.lastName) return openSnackbar(" please fill out all fields appropriately")
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
@@ -113,13 +124,14 @@ function App() {
       })
 
       if (txReceipt && txReceipt.blockNumber) {
-        alert('profile created');
+        openSnackbar('profile created');
+        history.push("/")
     } else {
-        alert('Something went wrong')
+      openSnackbar('Something went wrong')
     }
     } catch(err) {
         setLoaderState(false);
-        alert('Something went wrong')
+        openSnackbar('Something went wrong')
         setNewProfileData({
           firstName: "",
           lastName: ""
@@ -137,9 +149,30 @@ function App() {
 
   if(window.web3 || window.ethereum) {
 
+    const connectHandler = async (chainId) => {
+      const accounts = await provider.listAccounts()
+
+      if(accounts.length) {
+
+        if(chainId.chainId === "0x4") {
+          const balance = await provider.getBalance(accounts[0]);
+          setUserAccount({
+            address: accounts[0],
+            balance: parseFloat(ethers.utils.formatEther(balance)).toFixed(2)
+          })
+          setWrongNetworkNotice(false)
+        } else {
+          setUserAccount({
+            address: null,
+            balance: null
+          })
+          setWrongNetworkNotice(true)
+        }
+      }
+    }
+
     const handleChainChanged = async (chainId) => {
       const accounts = await provider.listAccounts() 
-
       if(accounts.length) {
 
         if(Number(chainId) === 4) {
@@ -161,23 +194,32 @@ function App() {
 
     const handleAccountsChanged = async (accounts) => {
 
-      if(accounts.length && chainId === 4) {
+      if(accounts.length) {
+
+        if(chainId === 4) {
+          const balance = await provider.getBalance(accounts[0]);
+          setUserAccount({
+            address: accounts[0],
+            balance: parseFloat(ethers.utils.formatEther(balance)).toFixed(2)
+          })
+          setWrongNetworkNotice(false)
+        } else {
+          setUserAccount({
+            address: null,
+            balance: null
+          })
+          setWrongNetworkNotice(true)
+        } 
         
-        const balance = await provider.getBalance(accounts[0]);
-        setUserAccount({
-          address: accounts[0],
-          balance: parseFloat(ethers.utils.formatEther(balance)).toFixed(2)
-        })
-        setWrongNetworkNotice(false)
       } else {
         setUserAccount({
           address: null,
           balance: null
         })
-        setWrongNetworkNotice(true)
+        setWrongNetworkNotice(false)
       }
     }
-
+    window.ethereum.on('connect', connectHandler)
     window.ethereum.on('chainChanged', handleChainChanged)
     window.ethereum.on('accountsChanged', handleAccountsChanged)
 
