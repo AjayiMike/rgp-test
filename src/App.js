@@ -4,7 +4,7 @@ import Header from "./components/Header"
 import Profiles from "./views/Profiles"
 import CreateProfile from "./views/CreateProfile"
 import SideDrawer from "./components/SideDrawer"
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import {Switch, Route} from "react-router-dom"
 import { ethers } from 'ethers'
 import Abi from "./ABI/abi.json";
 import { useSnackbar } from 'react-simple-snackbar'
@@ -13,7 +13,8 @@ import {useHistory} from "react-router-dom"
 
 function App() {
 
-const history = useHistory()
+  const history = useHistory();
+
   const options = {
     position: 'bottom-center',
     closeStyle: {
@@ -99,7 +100,12 @@ const history = useHistory()
 
   const createProfile = async () => {
 
-    if(!newProfileData.firstName || !newProfileData.lastName) return openSnackbar(" please fill out all fields appropriately")
+    if(!newProfileData.firstName || !newProfileData.lastName) return openSnackbar("please fill out all fields appropriately");
+    if(userAccount.balance < 0.01) return openSnackbar("Insufficient Ether balance, at least 0.01ETH is needed");
+  
+    const myAddress = profiles.find(profile => profile.profileAddress === userAccount.address)
+
+    if(myAddress) return openSnackbar("Profile already created for this account");
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
@@ -123,8 +129,12 @@ const history = useHistory()
         lastName: ""
       })
 
+
       if (txReceipt && txReceipt.blockNumber) {
-        openSnackbar('profile created');
+
+        const newbBalance = await provider.getBalance(userAccount.address);
+        setUserAccount(prev => ({...prev, balance: parseFloat(ethers.utils.formatEther(newbBalance)).toFixed(2)})) //updating user balance
+        openSnackbar('Profile created ✅')
         history.push("/")
     } else {
       openSnackbar('Something went wrong')
@@ -132,6 +142,7 @@ const history = useHistory()
     } catch(err) {
         setLoaderState(false);
         openSnackbar('Something went wrong')
+        console.log("error: ", err)
         setNewProfileData({
           firstName: "",
           lastName: ""
@@ -196,7 +207,7 @@ const history = useHistory()
 
       if(accounts.length) {
 
-        if(chainId === 4) {
+        if(chainId && chainId === 4) {
           const balance = await provider.getBalance(accounts[0]);
           setUserAccount({
             address: accounts[0],
@@ -347,22 +358,20 @@ const history = useHistory()
 
   return (
     <div className="App">
-      <Router>
-        <Header userAccount = {userAccount} displaySideDrawer = {toggleNav} connectWallet = {connectWallet}/>
-        {wrongNetworkNotice && <span className = "wrong-network-notice">You are connected to the wrong network, please switch to Rinkeby Network</span>}
-        {windowWidth <= 768 && <SideDrawer hideSideDrawer = {toggleNav} showSideDrawerState = {showSideDrawer}/>}
-        <Switch>
-          <Route exact path="/">
-            <Profiles profiles = {profiles}/>
-          </Route>
-          <Route exact path="/profiles">
-            <Profiles profiles = {profiles}/>
-          </Route>
-          <Route exact path="/create-profile">
-            <CreateProfile newProfileData = {newProfileData} createProfile = {createProfile} onNamesChange = {onNamesChange} connected = {!!userAccount.address} loaderState = {loaderState} connectWallet = {connectWallet}/>
-          </Route>
-        </Switch>
-      </Router>
+      <Header userAccount = {userAccount} displaySideDrawer = {toggleNav} connectWallet = {connectWallet}/>
+      {wrongNetworkNotice && <span className = "wrong-network-notice">You are connected to the wrong network, please switch to Rinkeby Network</span>}
+      {windowWidth <= 768 && <SideDrawer hideSideDrawer = {toggleNav} showSideDrawerState = {showSideDrawer}/>}
+      <Switch>
+        <Route exact path="/">
+          <Profiles profiles = {profiles}/>
+        </Route>
+        <Route exact path="/profiles">
+          <Profiles profiles = {profiles}/>
+        </Route>
+        <Route exact path="/create-profile">
+          <CreateProfile newProfileData = {newProfileData} createProfile = {createProfile} onNamesChange = {onNamesChange} connected = {!!userAccount.address} loaderState = {loaderState} connectWallet = {connectWallet}/>
+        </Route>
+      </Switch>
     </div>
   );
 }

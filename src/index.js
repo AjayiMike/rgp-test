@@ -4,11 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import SnackbarProvider from 'react-simple-snackbar'
+import {BrowserRouter as Router} from "react-router-dom" //bringing rhis to here so as to be able aceess history in appjs
 
 ReactDOM.render(
   <React.StrictMode>
     <SnackbarProvider>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </SnackbarProvider>
   </React.StrictMode>,
   document.getElementById('root')
